@@ -10,7 +10,7 @@ public class Main {
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 
-		/*HttpClient client = HttpClient.newHttpClient();
+		HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://v6.exchangerate-api.com/v6/6427a64d98991b526ef20dcf/latest/USD"))
                 .build();
@@ -19,8 +19,8 @@ public class Main {
                 HttpResponse.BodyHandlers.ofString());
 
         System.out.println(response.body());
-        String RES = response.body();*/
-		String RES = "{\r\n"
+        String RES = response.body();
+		/*String RES = "{\r\n"
 				+ " \"result\":\"success\",\r\n"
 				+ " \"documentation\":\"https://www.exchangerate-api.com/docs\",\r\n"
 				+ " \"terms_of_use\":\"https://www.exchangerate-api.com/terms\",\r\n"
@@ -193,7 +193,7 @@ public class Main {
 				+ "  \"ZMW\":19.0958,\r\n"
 				+ "  \"ZWL\":4727.2924\r\n"
 				+ " }\r\n"
-				+ "}";
+				+ "}";*/
         
         int CONPosistion = RES.indexOf("PLN");
         String CONChar = RES.substring(CONPosistion+5, CONPosistion+11);
