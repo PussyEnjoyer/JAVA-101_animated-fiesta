@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -51,6 +52,23 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		timer.start();
+		if(play) {
+			if(new Rectangle(ballposX,ballposY,20,20).intersects(new Rectangle(playerX,550,100,8))) {
+				balldirY = - balldirY;
+			}
+			
+			ballposX += balldirX;
+			ballposY += balldirY;
+			if(ballposY < 0) {
+				balldirY = - balldirY;
+			} 
+			if(ballposX < 0) {
+				balldirX = - balldirX;
+			}
+			if(ballposX > 670) {
+				balldirX = - balldirX;
+			}
+		}
 		repaint();
 		
 	}
