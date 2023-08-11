@@ -19,7 +19,7 @@ public class Main {
         //Ustalamy format otrzymajen odpowiedzi i wysyłąmy zapytanie
         HttpResponse<String> response = client.send(request,
                 HttpResponse.BodyHandlers.ofString());
-
+        //System.out.println(response.body());
         //response zamieniamy na zwykłego stringa aaby było prościej wykonywać na nim działania
         String RES = response.body();
         //response można odczytać łatwej przy pomocy JSON 
