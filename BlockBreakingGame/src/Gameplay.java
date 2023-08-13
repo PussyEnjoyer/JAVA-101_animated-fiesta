@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.*;
 import javax.swing.*;
@@ -20,11 +21,15 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
 	
 	private int balldirX = -1;
 	private int balldirY = -2;
+		
+	private MapGenerator map;
 	
 	public Gameplay() {
+		map = new MapGenerator(3,7);
 		addKeyListener(this);
 		setFocusable(true);
 		setFocusTraversalKeysEnabled(false);
+		
 		timer = new Timer(delay, this);
 		timer.start();
 	}
@@ -38,6 +43,8 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
 		g.fillRect(0, 0, 3, 692);
 		g.fillRect(0, 0, 692, 3);
 		g.fillRect(684, 0, 3, 692);
+		//BOLKI mc D:D
+		map.draw((Graphics2D)g);
 		
 		//paletka wiktor referencja 
 		g.setColor(Color.CYAN);
@@ -46,7 +53,9 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
 		g.setColor(Color.CYAN);
 		g.fillOval(ballposX, ballposY, 20, 20);
 		
+		
 		g.dispose();
+		
 	}
 	
 	@Override
@@ -56,6 +65,36 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
 			if(new Rectangle(ballposX,ballposY,20,20).intersects(new Rectangle(playerX,550,100,8))) {
 				balldirY = - balldirY;
 			}
+			
+			A: for(int i =0;i<map.map.length;i++) {
+				for(int j =0;j<map.map[0].length;j++) {
+					if(map.map[i][j]>0) {
+						int brickX = j*map.brickW+80;
+						int brickY = i*map.brickH+50;
+						int brickW = map.brickW;
+						int brickH = map.brickH;
+						
+						Rectangle rect = new Rectangle(brickX, brickY, brickW, brickH);
+						Rectangle ballRect = new Rectangle(ballposX,ballposY,20,20);
+						Rectangle brickRect = rect;
+						
+						if(ballRect.intersects(brickRect)) {
+							map.setBrickValue(0, i, j);
+							totalbricks--;
+							score+=5;
+							if(ballposX+19<=brickRect.x||ballposX+1>=brickRect.x+brickRect.width) {
+								balldirX=-balldirX;
+							} else {
+								balldirY=-balldirY;
+							}
+							
+							break A;
+						}
+					}
+				}
+			}
+			
+			
 			
 			ballposX += balldirX;
 			ballposY += balldirY;
@@ -106,5 +145,5 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
 	}
 
 	
-
+	
 }
